@@ -1,4 +1,4 @@
 a = 10
-b = 766
+b = 76
 sum = a + b
 print(sum)
