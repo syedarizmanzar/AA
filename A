@@ -1,0 +1,61 @@
+"""
+Simple script to compute the sum of two numbers.
+
+Usage:
+  - Interactive prompt:
+      python sum_two_numbers.py
+  - Command-line arguments:
+      python sum_two_numbers.py 3 4
+  - With floats:
+      python sum_two_numbers.py 2.5 1.75
+"""
+from __future__ import annotations
+import argparse
+from typing import Union
+
+Number = Union[int, float]
+
+
+def sum_two_numbers(a: Number, b: Number) -> Number:
+    """Return the sum of two numbers."""
+    return a + b
+
+
+def parse_number(s: str) -> Number:
+    """Parse a string into an int if possible, otherwise float."""
+    try:
+        return int(s)
+    except ValueError:
+        return float(s)
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Compute the sum of two numbers.")
+    parser.add_argument("a", nargs="?", help="first number")
+    parser.add_argument("b", nargs="?", help="second number")
+    args = parser.parse_args()
+
+    if args.a is None or args.b is None:
+        # prompt interactively if arguments missing
+        a_str = input("Enter first number: ").strip()
+        b_str = input("Enter second number: ").strip()
+    else:
+        a_str, b_str = args.a, args.b
+
+    try:
+        a = parse_number(a_str)
+        b = parse_number(b_str)
+    except ValueError:
+        print("Error: please enter valid integers or floats.")
+        return
+
+    result = sum_two_numbers(a, b)
+    # Print integers without decimal point when result is an integer
+    if isinstance(result, float) and result.is_integer():
+        result = int(result)
+    print(f"Sum: {result}")
+
+
+if __name__ == "__main__":
+    main()
+```
